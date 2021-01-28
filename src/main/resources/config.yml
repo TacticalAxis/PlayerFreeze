@@ -1,0 +1,12 @@
+messages:
+  - ""
+  - ""
+  - "&eYou have been frozen by a staff member."
+  - "&eIf you disconnect, you will be banned"
+  - "&ePlease connect to our Discord Server"
+  - "&ediscord.shockpvp.net"
+  - ""
+  - ""
+staff-player-disconnect-message: "&8[&9!&8] &4%username% logged out while frozen!"
+staff-player-freeze-message: "&8[&9!&8] &4%username% is now frozen!"
+staff-player-release-message: "&8[&9!&8] &4%username% has been released!"

@@ -1,0 +1,17 @@
+name: PlayerFreeze
+main: io.github.tacticalaxis.playerfreeze.PlayerFreeze
+version: 1.0
+description: A plugin that freezes players
+author: NathanD256
+prefix: PF
+api-version: 1.16
+commands:
+  ss:
+    description: A command to freeze a player
+    usage: /<command>
+  ssreload:
+    description: A command to reload the plugin
+    usage: /<command>
+  ssrelease:
+    description: A command to reload the plugin
+    usage: /<command>
