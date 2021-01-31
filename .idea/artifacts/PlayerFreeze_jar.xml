@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
   <artifact type="jar" name="PlayerFreeze:jar">
-    <output-path>$PROJECT_DIR$/../../../../../../TestingServer1.16.4/plugins</output-path>
+    <output-path>$PROJECT_DIR$/../../../../../../TestingServer1.8.8/plugins</output-path>
     <root id="archive" name="PlayerFreeze.jar">
       <element id="module-output" name="PlayerFreeze" />
     </root>

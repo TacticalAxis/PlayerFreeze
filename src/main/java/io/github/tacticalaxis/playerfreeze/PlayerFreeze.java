@@ -2,6 +2,10 @@ package io.github.tacticalaxis.playerfreeze;
 
 import io.github.tacticalaxis.playerfreeze.image.MessageRunnable;
 import io.github.tacticalaxis.playerfreeze.image.PictureUtil;
+import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -16,7 +20,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashMap;
 
-@SuppressWarnings("ConstantConditions")
 public class PlayerFreeze extends JavaPlugin implements Listener {
 
     public static HashMap<Player, String> frozen;
@@ -34,8 +37,6 @@ public class PlayerFreeze extends JavaPlugin implements Listener {
         pictureUtil = new PictureUtil();
         frozen = new HashMap<>();
         getCommand("ss").setExecutor(new FreezeCommand());
-        getCommand("ssreload").setExecutor(new ReloadCommand());
-        getCommand("ssrelease").setExecutor(new ReleaseCommand());
         getServer().getPluginManager().registerEvents(this, this);
     }
 
@@ -47,7 +48,7 @@ public class PlayerFreeze extends JavaPlugin implements Listener {
     @EventHandler
     public void move(PlayerMoveEvent event) {
         if (frozen.containsKey(event.getPlayer())) {
-            event.setCancelled(true);
+            event.setTo(event.getFrom());
             sendImage(event.getPlayer());
         }
     }
@@ -57,7 +58,11 @@ public class PlayerFreeze extends JavaPlugin implements Listener {
         if (frozen.containsKey(event.getPlayer())) {
             for (Player player: Bukkit.getOnlinePlayers()) {
                 if (frozen.containsValue(player.getName())) {
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', ConfigurationManager.getInstance().getMainConfiguration().getString("staff-player-disconnect-message").replace("%username%", event.getPlayer().getName())));
+                    BaseComponent[] hoverEventComponents = new BaseComponent[]{new TextComponent(net.md_5.bungee.api.ChatColor.YELLOW + "Click to ban!")};
+                    TextComponent message = new TextComponent(net.md_5.bungee.api.ChatColor.translateAlternateColorCodes('&', ConfigurationManager.getInstance().getMainConfiguration().getString("staff-player-disconnect-message").replace("%username%", event.getPlayer().getName())));
+                    message.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/" + ConfigurationManager.getInstance().getMainConfiguration().getString("staff-click-command").replace("%username%", event.getPlayer().getName())));
+                    message.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, hoverEventComponents));
+                    player.spigot().sendMessage(message);
                     return;
                 }
             }
@@ -65,6 +70,7 @@ public class PlayerFreeze extends JavaPlugin implements Listener {
                 Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', ConfigurationManager.getInstance().getMainConfiguration().getString("staff-player-disconnect-message".replace("%username%", event.getPlayer().getName()))));
             }
         }
+        frozen.remove(event.getPlayer());
     }
 
     @EventHandler
@@ -100,7 +106,7 @@ public class PlayerFreeze extends JavaPlugin implements Listener {
 
     private void sendImage(Player player) {
         final MessageRunnable messageRunnable = new MessageRunnable(player);
-        messageRunnable.runTaskAsynchronously(this);
+        messageRunnable.runTask(this);
     }
 
     public PictureUtil getPictureUtil() {

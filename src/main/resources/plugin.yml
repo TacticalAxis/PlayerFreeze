@@ -9,9 +9,3 @@ commands:
   ss:
     description: A command to freeze a player
     usage: /<command>
-  ssreload:
-    description: A command to reload the plugin
-    usage: /<command>
-  ssrelease:
-    description: A command to reload the plugin
-    usage: /<command>

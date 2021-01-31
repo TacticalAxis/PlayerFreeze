@@ -1,3 +1,4 @@
+# make sure there are only 8 lines here
 messages:
   - ""
   - ""
@@ -7,6 +8,9 @@ messages:
   - "&ediscord.shockpvp.net"
   - ""
   - ""
+
+# configurable messages - do %username% for a player's name
 staff-player-disconnect-message: "&8[&9!&8] &4%username% logged out while frozen!"
 staff-player-freeze-message: "&8[&9!&8] &4%username% is now frozen!"
 staff-player-release-message: "&8[&9!&8] &4%username% has been released!"
+staff-click-command: "ban -s %username% @Cheating"
